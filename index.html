@@ -168,7 +168,7 @@
             align-items: center;
             z-index: 20;
             pointer-events: none;
-            padding: clamp(9.8rem, 18vh, 12.2rem) 1rem 2.2rem;
+            padding: clamp(11rem, 21vh, 14rem) 1rem 2.2rem;
         }
         #hero-content-wrapper * { pointer-events: auto; }
 
@@ -541,8 +541,8 @@
         }
 
         .hero-panel {
-            width: min(920px, 100%);
-            padding: clamp(1.4rem, 3.2vw, 2.55rem) clamp(1rem, 3.2vw, 2.6rem);
+            width: min(980px, 100%);
+            padding: clamp(1.6rem, 3.4vw, 2.9rem) clamp(1.05rem, 3.4vw, 2.9rem);
             border-radius: 1.8rem;
             border: 1px solid rgba(255,255,255,0.12);
             background:
@@ -553,25 +553,60 @@
             animation: heroPanelIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
 
+        .hero-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            padding: 0.42rem 0.78rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.06);
+            color: rgba(255,255,255,0.9);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 0.6rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            box-shadow: 0 0 0 1px rgba(6,182,212,0.14), 0 8px 18px rgba(0,0,0,0.22);
+        }
+
+        .hero-kicker::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 999px;
+            background: linear-gradient(120deg, #8b5cf6, #06b6d4);
+            box-shadow: 0 0 10px rgba(6,182,212,0.45);
+        }
+
         .hero-title-premium {
             margin-inline: auto;
-            max-width: 13ch;
+            max-width: 12ch;
             text-wrap: balance;
             text-shadow: 0 8px 32px rgba(0,0,0,0.55);
-            margin-bottom: 0.85rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
         }
 
         .hero-sub-premium {
-            max-width: 47ch;
+            max-width: 50ch;
             margin-inline: auto;
-            color: #e1e1ea;
+            color: #ececf3;
             font-weight: 400;
+            margin-top: 0.4rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .hero-support {
             margin-top: 0.35rem;
-            margin-bottom: 0.1rem;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.74rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
         }
 
         #hero-btns {
-            margin-top: 0.95rem;
+            margin-top: 1.15rem;
         }
 
         .cta-primary {
@@ -783,28 +818,40 @@
         @media (max-width: 767px) {
             .hero-panel {
                 border-radius: 1.2rem;
-                padding: 1.3rem 1rem;
+                padding: 1.45rem 1rem;
                 background:
                     linear-gradient(135deg, rgba(139,92,246,0.1), rgba(6,182,212,0.08)),
                     rgba(5,5,5,0.28);
                 backdrop-filter: blur(4px);
             }
 
+            .hero-kicker {
+                font-size: 0.55rem;
+                letter-spacing: 0.18em;
+                margin-bottom: 0.9rem;
+            }
+
             #hero-content-wrapper {
                 justify-content: center;
-                padding: 9.9rem 1rem 2.2rem;
+                padding: 11.4rem 1rem 2.2rem;
             }
 
             .hero-title-premium {
                 margin-bottom: 0.75rem;
+                max-width: 11.5ch;
             }
 
             #hero-btns {
-                margin-top: 0.9rem;
+                margin-top: 1rem;
             }
 
             .hero-cta-primary {
                 width: min(92vw, 360px);
+            }
+
+            .hero-support {
+                font-size: 0.67rem;
+                letter-spacing: 0.06em;
             }
         }
 
@@ -897,11 +944,11 @@
             .mobile-fixed-reserve .mobile-fixed-reserve__btn {
                 width: 100%;
                 justify-content: center;
-                min-height: 54px;
-                font-size: 0.78rem;
-                letter-spacing: 0.16em;
+                min-height: 58px;
+                font-size: 0.82rem;
+                letter-spacing: 0.18em;
                 border-radius: 1rem;
-                box-shadow: 0 14px 28px rgba(0,0,0,0.42), 0 0 0 1px rgba(255,255,255,0.2);
+                box-shadow: 0 16px 34px rgba(0,0,0,0.44), 0 0 0 1px rgba(255,255,255,0.26), 0 0 26px rgba(6,182,212,0.2);
             }
         }
 
@@ -1007,6 +1054,59 @@
             display: block;
             transition: transform 0.5s ease, filter 0.5s ease;
             filter: brightness(0.7) contrast(1.1);
+        }
+
+        .result-slider {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .result-slider-track {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.36s ease;
+            will-change: transform;
+        }
+
+        .result-slider-slide {
+            flex: 0 0 100%;
+            width: 100%;
+            height: 100%;
+        }
+
+        .result-slider-dots {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.42rem;
+            margin-top: 0.72rem;
+        }
+
+        .result-slider-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.28);
+            background: rgba(255,255,255,0.24);
+            padding: 0;
+            cursor: pointer;
+            transition: width 0.24s ease, background 0.24s ease, border-color 0.24s ease, opacity 0.24s ease;
+            opacity: 0.62;
+        }
+
+        .result-slider-dot:hover {
+            opacity: 0.9;
+            border-color: rgba(6,182,212,0.72);
+            background: rgba(6,182,212,0.52);
+        }
+
+        .result-slider-dot.is-active {
+            width: 18px;
+            background: linear-gradient(120deg, rgba(139,92,246,0.95), rgba(6,182,212,0.95));
+            border-color: rgba(255,255,255,0.36);
+            opacity: 1;
         }
 
         .service-gallery-card:hover .service-gallery-image {
@@ -1213,6 +1313,12 @@
             box-shadow: 0 14px 32px rgba(0,0,0,0.32);
             padding: 2rem 1.7rem;
             transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 0.95rem;
+            aspect-ratio: 4 / 5;
+            min-height: 340px;
         }
 
         #reviews .reviews-mobile-item.review-card::before {
@@ -1232,11 +1338,18 @@
 
         #reviews .review-quote {
             color: #e4e4e7;
-            line-height: 1.8;
+            line-height: 1.86;
             letter-spacing: 0.01em;
-            margin-top: 0.2rem;
+            margin-top: 0.35rem;
             position: relative;
             padding-left: 1.05rem;
+            font-size: 0.95rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 8;
+            line-clamp: 8;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-wrap: pretty;
         }
 
         #reviews .review-quote::before {
@@ -1248,6 +1361,70 @@
             font-size: 1.2rem;
             font-weight: 700;
             line-height: 1;
+        }
+
+        #reviews .review-stars {
+            color: #fde68a;
+            font-size: 0.92rem;
+            letter-spacing: 0.16em;
+            font-weight: 700;
+            text-shadow: 0 0 12px rgba(250,204,21,0.2);
+        }
+
+        #reviews .review-stars-muted {
+            color: rgba(255,255,255,0.25);
+            margin-left: 0.15rem;
+        }
+
+        #reviews .review-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.48rem;
+            margin-top: 0.6rem;
+        }
+
+        #reviews .review-author-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.55rem;
+            flex-wrap: wrap;
+        }
+
+        #reviews .review-author-name {
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 0.01em;
+        }
+
+        #reviews .review-verified {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.22rem 0.5rem;
+            border-radius: 999px;
+            border: 1px solid rgba(6,182,212,0.45);
+            background: rgba(6,182,212,0.12);
+            color: #baf6ff;
+            font-size: 0.58rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            white-space: nowrap;
+        }
+
+        #reviews .review-verified::before {
+            content: '✔';
+            font-size: 0.62rem;
+            line-height: 1;
+        }
+
+        #reviews .review-date {
+            color: #a1a1aa;
+            font-size: 0.66rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
         }
 
         #reviews .gallery-nav-btn {
@@ -1311,6 +1488,18 @@
             #reviews .reviews-mobile-item.review-card {
                 padding: 1.55rem 1.2rem;
                 border-radius: 1rem;
+                min-height: 312px;
+            }
+
+            #reviews .review-quote {
+                -webkit-line-clamp: 7;
+                line-clamp: 7;
+                font-size: 0.91rem;
+                line-height: 1.78;
+            }
+
+            #reviews .review-author-name {
+                font-size: 0.88rem;
             }
 
             #reviews .section-header a {
@@ -1612,16 +1801,18 @@
     <!-- Hero -->
     <div id="hero-content-wrapper">
         <div class="max-w-4xl text-center px-4 hero-panel">
+            <span class="hero-kicker">Hair Color Studio Premium</span>
             <h1 id="hero-title" class="hero-title-scale hero-title-premium text-5xl md:text-7xl lg:text-8xl font-medium tracking-tight text-white opacity-0">
-                Transformá tu imagen con
+                Tu mejor versión empieza con
                 <br>
                 <span class="bg-gradient-to-r from-violet-500 to-cyan-400 bg-clip-text text-transparent">
                    color de autor
                 </span>
             </h1>
             <p id="hero-sub" class="hero-sub-scale hero-sub-premium text-lg text-zinc-300 mt-4 max-w-xl mx-auto opacity-0">
-                Balayage, corrección y diseño capilar premium para un resultado natural, luminoso y hecho a tu medida.
+                Balayage, corrección y diseño capilar premium para un look luminoso, natural y totalmente personalizado.
             </p>
+            <p class="hero-support">Diagnóstico profesional · Plan de color a medida</p>
             <div id="hero-btns" class="flex flex-col gap-4 justify-center items-center opacity-0">
                 <a href="agendar turno.html" class="mt-6 cta-primary hero-cta-primary">Reservar turno</a>
                 <a href="#servicios" class="text-white/60 text-xs hover:text-white transition underline underline-offset-4">ver servicios</a>
@@ -1714,15 +1905,28 @@
                         Resultados reales de clientas que confiaron en nuestro trabajo.
                     </p>
                 </div>
-                <div class="gallery-nav-container media-showcase">
-                    <button class="gallery-nav-btn" id="trabajos-prev" aria-label="Anterior">
-                        <i class="fa-solid fa-chevron-left"></i>
-                    </button>
-                    <div class="gallery-wrapper">
-                        <div class="trabajos-mobile-track grid md:grid-cols-3 gap-10">
+                <div class="gallery-wrapper">
+                    <div class="trabajos-mobile-track grid md:grid-cols-3 gap-10">
                     <article class="service-gallery-card hover:scale-[1.03] transition-all duration-300" data-gallery-item>
                         <div class="service-gallery-image">
-                            <img src="img/banner.jpg" alt="Trabajo realizado de balayage" loading="lazy" decoding="async">
+                            <div class="result-slider" data-result-slider>
+                                <div class="result-slider-track" data-result-slider-track>
+                                    <figure class="result-slider-slide">
+                                        <img src="img/banner.jpg" alt="Trabajo realizado de balayage 1" loading="lazy" decoding="async">
+                                    </figure>
+                                    <figure class="result-slider-slide">
+                                        <img src="img/imagendelocal.png" alt="Trabajo realizado de balayage 2" loading="lazy" decoding="async">
+                                    </figure>
+                                    <figure class="result-slider-slide">
+                                        <img src="img/banner.jpg" alt="Trabajo realizado de balayage 3" loading="lazy" decoding="async">
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="result-slider-dots" data-result-slider-dots>
+                            <button class="result-slider-dot is-active" type="button" data-slide-index="0" aria-label="Ver imagen 1"></button>
+                            <button class="result-slider-dot" type="button" data-slide-index="1" aria-label="Ver imagen 2"></button>
+                            <button class="result-slider-dot" type="button" data-slide-index="2" aria-label="Ver imagen 3"></button>
                         </div>
                         <div class="service-gallery-info">
                             <div class="service-gallery-title">
@@ -1747,7 +1951,24 @@
                     </article>
                     <article class="service-gallery-card hover:scale-[1.03] transition-all duration-300" data-gallery-item>
                         <div class="service-gallery-image">
-                            <img src="img/imagendelocal.png" alt="Trabajo realizado de coloración capilar" loading="lazy" decoding="async">
+                            <div class="result-slider" data-result-slider>
+                                <div class="result-slider-track" data-result-slider-track>
+                                    <figure class="result-slider-slide">
+                                        <img src="img/imagendelocal.png" alt="Trabajo realizado de coloración capilar 1" loading="lazy" decoding="async">
+                                    </figure>
+                                    <figure class="result-slider-slide">
+                                        <img src="img/banner.jpg" alt="Trabajo realizado de coloración capilar 2" loading="lazy" decoding="async">
+                                    </figure>
+                                    <figure class="result-slider-slide">
+                                        <img src="img/imagendelocal.png" alt="Trabajo realizado de coloración capilar 3" loading="lazy" decoding="async">
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="result-slider-dots" data-result-slider-dots>
+                            <button class="result-slider-dot is-active" type="button" data-slide-index="0" aria-label="Ver imagen 1"></button>
+                            <button class="result-slider-dot" type="button" data-slide-index="1" aria-label="Ver imagen 2"></button>
+                            <button class="result-slider-dot" type="button" data-slide-index="2" aria-label="Ver imagen 3"></button>
                         </div>
                         <div class="service-gallery-info">
                             <div class="service-gallery-title">
@@ -1770,18 +1991,49 @@
                             </div>
                         </div>
                     </article>
-                    <article class="service-gallery-card service-gallery-note flex items-center justify-center p-8 text-center">
-                        <div>
-                            <i class="fa-regular fa-image text-4xl text-cyan-500 mb-5"></i>
-                            <h4 class="text-xl font-semibold mb-3"></h4>
-                            <p class="text-sm text-gray-400 leading-relaxed"> <strong></strong> <strong></strong> </p>
+                    <article class="service-gallery-card hover:scale-[1.03] transition-all duration-300" data-gallery-item>
+                        <div class="service-gallery-image">
+                            <div class="result-slider" data-result-slider>
+                                <div class="result-slider-track" data-result-slider-track>
+                                    <figure class="result-slider-slide">
+                                        <img src="img/banner.jpg" alt="Trabajo realizado de recuperación capilar 1" loading="lazy" decoding="async">
+                                    </figure>
+                                    <figure class="result-slider-slide">
+                                        <img src="img/imagendelocal.png" alt="Trabajo realizado de recuperación capilar 2" loading="lazy" decoding="async">
+                                    </figure>
+                                    <figure class="result-slider-slide">
+                                        <img src="img/banner.jpg" alt="Trabajo realizado de recuperación capilar 3" loading="lazy" decoding="async">
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="result-slider-dots" data-result-slider-dots>
+                            <button class="result-slider-dot is-active" type="button" data-slide-index="0" aria-label="Ver imagen 1"></button>
+                            <button class="result-slider-dot" type="button" data-slide-index="1" aria-label="Ver imagen 2"></button>
+                            <button class="result-slider-dot" type="button" data-slide-index="2" aria-label="Ver imagen 3"></button>
+                        </div>
+                        <div class="service-gallery-info">
+                            <div class="service-gallery-title">
+                                <div class="service-gallery-title-text">
+                                    <p>Recuperación Capilar</p>
+                                    <h4>Nutrición y brillo saludable</h4>
+                                </div>
+                                <button class="gallery-expand-btn" data-expand-btn aria-label="Ver detalles">
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </button>
+                            </div>
+                            <div class="service-gallery-details" data-expand-details>
+                                <h5><i class="fa-solid fa-sparkles"></i>Detalles del servicio:</h5>
+                                <ul>
+                                    <li>Reconstrucción de fibra dañada</li>
+                                    <li>Nutrición profunda antirrotura</li>
+                                    <li>Brillo y suavidad inmediata</li>
+                                    <li>Asesoramiento de mantenimiento</li>
+                                </ul>
+                            </div>
                         </div>
                     </article>
                 </div>
-                    </div>
-                    <button class="gallery-nav-btn" id="trabajos-next" aria-label="Siguiente">
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </button>
                 </div>
 
                 <div class="text-center">
@@ -2019,6 +2271,9 @@
                         <i class="fa-solid fa-chevron-right"></i>
                     </button>
                 </div>
+                <div class="text-center mt-12">
+                    <a href="agendar turno.html" class="inline-block cta-primary">Reservar turno</a>
+                </div>
             </div>
         </section>
 
@@ -2254,14 +2509,18 @@
             const renderReviews = () => {
                 const visibleReviews = getVisibleReviews();
                 reviewsTrack.innerHTML = visibleReviews.map((review) => {
-                    const stars = '⭐'.repeat(review.rating);
+                    const starsFilled = '★★★★★'.slice(0, review.rating);
+                    const starsEmpty = '☆☆☆☆☆'.slice(review.rating);
                     return `
                         <article class="reviews-mobile-item review-card review-card-enter hover:scale-[1.02] transition-all duration-300 border border-white/10 rounded-xl">
-                            <div class="text-cyan-400 mb-4 text-base tracking-[0.18em]">${stars}</div>
+                            <div class="review-stars" aria-label="${review.rating} de 5 estrellas">${starsFilled}<span class="review-stars-muted">${starsEmpty}</span></div>
                             <p class="review-quote">"${review.text}"</p>
-                            <div class="mt-6 flex items-center justify-between gap-3 w-full not-italic">
-                                <p class="font-bold text-white text-sm">${review.name}</p>
-                                <span class="text-zinc-500 text-xs uppercase tracking-[0.18em]">${review.date}</span>
+                            <div class="review-meta not-italic">
+                                <div class="review-author-row">
+                                    <p class="review-author-name">${review.name}</p>
+                                    <span class="review-verified">Cliente verificada</span>
+                                </div>
+                                <span class="review-date">${review.date}</span>
                             </div>
                         </article>
                     `;
@@ -2442,6 +2701,38 @@
                 btn.style.transform = details.classList.contains("active") ? "rotate(180deg)" : "rotate(0deg)";
             });
         });
+
+        // ── Sliders sutiles por tarjeta (Resultados Reales) ───────────────
+        (function initResultSliders() {
+            const sliders = document.querySelectorAll('[data-result-slider]');
+            if (!sliders.length) return;
+
+            sliders.forEach((slider) => {
+                const card = slider.closest('.service-gallery-card');
+                const track = slider.querySelector('[data-result-slider-track]');
+                const dots = card ? card.querySelectorAll('[data-result-slider-dots] .result-slider-dot') : [];
+                if (!track || !dots.length) return;
+
+                const setSlide = (index) => {
+                    const safeIndex = Math.max(0, Math.min(index, dots.length - 1));
+                    track.style.transform = `translateX(-${safeIndex * 100}%)`;
+                    dots.forEach((dot, dotIndex) => {
+                        const isActive = dotIndex === safeIndex;
+                        dot.classList.toggle('is-active', isActive);
+                        dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+                    });
+                };
+
+                dots.forEach((dot) => {
+                    dot.addEventListener('click', () => {
+                        const index = Number(dot.getAttribute('data-slide-index') || 0);
+                        setSlide(index);
+                    });
+                });
+
+                setSlide(0);
+            });
+        })();
 
         // ── Servicios: acordeón de descripciones ────────────────────
         (function initServiceAccordion() {
