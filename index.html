@@ -16,16 +16,56 @@
     <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700;1,800&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
 
     <style>
+        /* ============================================================
+           DESIGN TOKENS + BASE
+           ============================================================ */
         :root {
             --violet: #8b5cf6;
             --cyan: #06b6d4;
             --dark: #050505;
+            --surface-1: rgba(255,255,255,0.04);
+            --surface-2: rgba(255,255,255,0.07);
+            --stroke-soft: rgba(255,255,255,0.12);
+            --radius-lg: 1.2rem;
+            --radius-xl: 1.6rem;
+            --shadow-soft: 0 14px 34px rgba(0,0,0,0.3);
+            --shadow-premium: 0 24px 52px rgba(0,0,0,0.42);
         }
         body { background-color: var(--dark); color: white; font-family: 'Poppins', sans-serif; overflow-x: hidden; margin: 0; scroll-behavior: smooth; font-weight: 400; }
         * { font-family: 'Poppins', sans-serif; }
         .font-luxury { font-family: 'Poppins', sans-serif; font-weight: 800; letter-spacing: -0.02em; }
 
-        /* Loader */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(60% 40% at 10% 0%, rgba(139,92,246,0.08), transparent 60%),
+                radial-gradient(55% 35% at 90% 8%, rgba(6,182,212,0.09), transparent 64%);
+            z-index: -1;
+        }
+
+        h1, h2, h3 {
+            letter-spacing: -0.02em;
+            text-wrap: balance;
+        }
+
+        .ds-h2-section {
+            font-weight: 600;
+            line-height: 1.08;
+            text-shadow: 0 10px 24px rgba(0,0,0,0.32);
+        }
+
+        .section-kicker {
+            opacity: 0.92;
+            text-shadow: 0 0 14px rgba(6,182,212,0.2);
+        }
+
+          /* ============================================================
+              CORE LAYOUT + NAV + HERO
+              ============================================================ */
+          /* Loader */
         #loader { position: fixed; inset: 0; background: var(--dark); z-index: 2000; display: flex; justify-content: center; align-items: center; }
 
         /* Fondo */
@@ -126,7 +166,28 @@
         .main-content { position: relative; z-index: 30; margin-top: 100vh; background-color: #060606; }
 
         /* Sección alternada: fondo visiblemente diferenciado */
-        .section-alt { background-color: #0e0e0e; }
+        .section-alt {
+            background:
+                linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)),
+                #0d0d0d;
+            border-top: 1px solid rgba(255,255,255,0.04);
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .main-content section {
+            position: relative;
+        }
+
+        .main-content section::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.08), transparent);
+            pointer-events: none;
+        }
 
         /* Cards reutilizables */
         .review-card {
@@ -137,8 +198,21 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
+            box-shadow: var(--shadow-soft);
         }
         .review-card:hover { border-color: var(--cyan); transform: translateY(-8px); box-shadow: 0 20px 40px rgba(6,182,212,0.15); }
+
+        #servicios > .grid > div {
+            background: linear-gradient(165deg, rgba(139,92,246,0.07), rgba(6,182,212,0.05)), rgba(255,255,255,0.02);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-soft);
+            border-color: var(--stroke-soft);
+            backdrop-filter: blur(8px);
+        }
+
+        #servicios > .grid > div:hover {
+            box-shadow: var(--shadow-premium), 0 0 24px rgba(6,182,212,0.13);
+        }
 
         /* Estilos para iconos de "¿Por qué Elegirnos?" */
         .benefit-icon {
@@ -189,6 +263,65 @@
             line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
+        }
+
+        .service-accordion {
+            margin-top: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 0.85rem;
+            text-align: left;
+        }
+
+        .service-accordion-toggle {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 0.8rem;
+            color: rgba(255,255,255,0.9);
+            padding: 0.62rem 0.85rem;
+            font-size: 0.68rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            cursor: pointer;
+            transition: border-color 0.24s ease, background 0.24s ease, color 0.24s ease;
+        }
+
+        .service-accordion-toggle:hover {
+            border-color: rgba(6,182,212,0.72);
+            background: rgba(6,182,212,0.12);
+            color: #ffffff;
+        }
+
+        .service-accordion-toggle i {
+            transition: transform 0.24s ease;
+        }
+
+        .service-accordion-toggle[aria-expanded="true"] i {
+            transform: rotate(180deg);
+        }
+
+        .service-accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.32s ease, opacity 0.3s ease;
+        }
+
+        .service-accordion-content.is-open {
+            opacity: 1;
+            margin-top: 0.75rem;
+        }
+
+        .service-accordion-content p {
+            font-size: 0.9rem;
+            line-height: 1.62;
+            color: #d4d4d8;
+            margin: 0;
         }
 
         .cursor { display: inline-block; width: 3px; background-color: var(--cyan); margin-left: 5px; animation: blink 1s infinite; }
@@ -342,6 +475,69 @@
             line-height: 1.65;
         }
 
+        .hero-panel {
+            width: min(920px, 100%);
+            padding: clamp(1.2rem, 2.8vw, 2.1rem) clamp(1rem, 3vw, 2.4rem);
+            border-radius: 1.8rem;
+            border: 1px solid rgba(255,255,255,0.12);
+            background:
+                linear-gradient(135deg, rgba(139,92,246,0.12), rgba(6,182,212,0.08)),
+                rgba(5,5,5,0.42);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 26px 58px rgba(0,0,0,0.45);
+        }
+
+        .hero-title-premium {
+            margin-inline: auto;
+            max-width: 14ch;
+            text-wrap: balance;
+            text-shadow: 0 8px 32px rgba(0,0,0,0.55);
+        }
+
+        .hero-sub-premium {
+            max-width: 44ch;
+            margin-inline: auto;
+            color: #d4d4d8;
+        }
+
+        .cta-primary {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.55rem;
+            padding: 0.95rem 2.35rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.28);
+            background: linear-gradient(120deg, #9f77ff 0%, #1fd6f0 100%);
+            color: #090909;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            text-decoration: none;
+            box-shadow: 0 10px 26px rgba(6,182,212,0.24), 0 4px 10px rgba(0,0,0,0.28);
+            transition: transform 0.28s ease, box-shadow 0.28s ease, filter 0.28s ease;
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            filter: saturate(1.1) brightness(1.03);
+            box-shadow: 0 0 0 1px rgba(255,255,255,0.28), 0 16px 34px rgba(6,182,212,0.35), 0 10px 22px rgba(0,0,0,0.4);
+        }
+
+        .cta-primary:focus-visible {
+            outline: 2px solid rgba(255,255,255,0.95);
+            outline-offset: 3px;
+        }
+
+        .cta-primary--compact {
+            padding: 0.82rem 1.7rem;
+            font-size: 0.68rem;
+            letter-spacing: 0.14em;
+        }
+
         .section-title-scale {
             font-size: clamp(2rem, 4.2vw, 3.35rem);
             line-height: 1.08;
@@ -443,6 +639,98 @@
             }
         }
 
+        @media (max-width: 767px) {
+            .hero-panel {
+                border-radius: 1.2rem;
+                padding: 1.15rem 0.95rem;
+                background:
+                    linear-gradient(135deg, rgba(139,92,246,0.1), rgba(6,182,212,0.08)),
+                    rgba(5,5,5,0.28);
+                backdrop-filter: blur(4px);
+            }
+        }
+
+        /* ============================================================
+           MOBILE UX REFINEMENTS
+           ============================================================ */
+        .mobile-fixed-reserve {
+            display: none;
+        }
+
+        @media (max-width: 767px) {
+            .main-content section {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }
+
+            #servicios,
+            #reviews {
+                padding-top: 4.8rem !important;
+                padding-bottom: 4rem !important;
+            }
+
+            #por-que-elegirnos,
+            #proceso,
+            #antes-despues {
+                padding-top: 4rem !important;
+                padding-bottom: 4rem !important;
+            }
+
+            .section-header {
+                margin-bottom: 1.1rem !important;
+            }
+
+            .ds-h2-section {
+                font-size: 1.95rem;
+                line-height: 1.16;
+            }
+
+            #servicios > .grid {
+                gap: 0.9rem;
+            }
+
+            #servicios > .grid > div {
+                padding: 1.1rem;
+                border-radius: 1rem;
+            }
+
+            .service-accordion-toggle {
+                font-size: 0.62rem;
+                padding: 0.56rem 0.72rem;
+            }
+
+            .service-accordion-content p,
+            .review-quote,
+            .section-lead-scale {
+                font-size: 0.9rem;
+                line-height: 1.65;
+            }
+
+            .main-content {
+                padding-bottom: 6.2rem;
+            }
+
+            .whatsapp-float {
+                bottom: 92px;
+            }
+
+            .mobile-fixed-reserve {
+                display: block;
+                position: fixed;
+                left: 0.85rem;
+                right: 0.85rem;
+                bottom: max(0.75rem, env(safe-area-inset-bottom));
+                z-index: 140;
+                text-align: center;
+            }
+
+            .mobile-fixed-reserve a {
+                width: 100%;
+                justify-content: center;
+                box-shadow: 0 14px 28px rgba(0,0,0,0.42), 0 0 0 1px rgba(255,255,255,0.16);
+            }
+        }
+
         .scroll-arrow {
             display: inline-flex;
             align-items: center;
@@ -514,6 +802,7 @@
             aspect-ratio: 4 / 5;
             border: 2px solid rgba(6,182,212,0.3);
             transition: all 0.4s cubic-bezier(0.77,0,0.175,1);
+            box-shadow: var(--shadow-soft);
         }
 
         .service-gallery-card img {
@@ -683,8 +972,103 @@
             margin-top: 0.15rem;
         }
 
+        /* ============================================================
+           REVIEWS UI ENHANCEMENTS
+           ============================================================ */
         .review-card-enter {
             animation: reviewCardFade 0.34s ease;
+        }
+
+        #reviews .section-header {
+            max-width: 900px;
+            margin-inline: auto;
+        }
+
+        #reviews .section-header > .flex {
+            margin-bottom: 1.1rem;
+        }
+
+        #reviews .section-header a {
+            border-color: rgba(6,182,212,0.42);
+            background: rgba(6,182,212,0.08);
+            color: #ddf9ff;
+            border-radius: 999px;
+            font-size: 0.74rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+        }
+
+        #reviews .section-header a:hover {
+            background: rgba(6,182,212,0.18);
+            border-color: rgba(6,182,212,0.75);
+            transform: translateY(-1px);
+        }
+
+        #reviews .reviews-mobile-track {
+            gap: 1.35rem;
+        }
+
+        #reviews .reviews-mobile-item.review-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1.2rem;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: linear-gradient(160deg, rgba(139,92,246,0.08), rgba(6,182,212,0.08)), rgba(11,11,11,0.8);
+            box-shadow: 0 14px 32px rgba(0,0,0,0.32);
+            padding: 2rem 1.7rem;
+            transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+        }
+
+        #reviews .reviews-mobile-item.review-card::before {
+            content: '';
+            position: absolute;
+            inset: 0 0 auto 0;
+            height: 3px;
+            background: linear-gradient(120deg, rgba(139,92,246,0.95), rgba(6,182,212,0.95));
+            opacity: 0.9;
+        }
+
+        #reviews .reviews-mobile-item.review-card:hover {
+            border-color: rgba(6,182,212,0.62);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.38), 0 0 20px rgba(6,182,212,0.12);
+        }
+
+        #reviews .review-quote {
+            color: #e4e4e7;
+            line-height: 1.8;
+            letter-spacing: 0.01em;
+            margin-top: 0.2rem;
+            position: relative;
+            padding-left: 1.05rem;
+        }
+
+        #reviews .review-quote::before {
+            content: '“';
+            position: absolute;
+            left: 0;
+            top: -0.06rem;
+            color: rgba(6,182,212,0.95);
+            font-size: 1.2rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        #reviews .gallery-nav-btn {
+            width: 2.75rem;
+            height: 2.75rem;
+            border-radius: 999px;
+            border-color: rgba(6,182,212,0.56);
+            background: rgba(6,182,212,0.15);
+            color: #9befff;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.26);
+        }
+
+        #reviews .gallery-nav-btn:hover {
+            background: rgba(6,182,212,0.3);
+            border-color: var(--cyan);
+            color: #ffffff;
         }
 
         @keyframes reviewCardFade {
@@ -701,6 +1085,10 @@
         @media (min-width: 768px) {
             .reviews-mobile-track {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            #reviews .reviews-mobile-track {
+                gap: 1.15rem;
             }
         }
 
@@ -723,6 +1111,16 @@
             .reviews-mobile-track {
                 gap: 1rem;
                 padding-bottom: 0.5rem;
+            }
+
+            #reviews .reviews-mobile-item.review-card {
+                padding: 1.55rem 1.2rem;
+                border-radius: 1rem;
+            }
+
+            #reviews .section-header a {
+                padding: 0.55rem 0.9rem;
+                font-size: 0.65rem;
             }
 
             .trabajos-mobile-track::-webkit-scrollbar,
@@ -869,9 +1267,23 @@
             border: 1px solid rgba(255,255,255,0.1);
             background: #111;
             touch-action: none; user-select: none;
-            box-shadow: 0 24px 40px rgba(0,0,0,0.3);
+            box-shadow: var(--shadow-premium);
             aspect-ratio: 3 / 4;
             cursor: ew-resize;
+        }
+
+        .timeline-step {
+            border-radius: var(--radius-lg);
+            transition: background 0.28s ease, box-shadow 0.28s ease;
+        }
+
+        .timeline-step:hover {
+            background: rgba(255,255,255,0.02);
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+        }
+
+        footer {
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
         }
 
         .before-after-base, .before-after-overlay {
@@ -989,7 +1401,7 @@
         </button>
         <div class="flex flex-col gap-8 text-center">
             <a href="index.html" class="mobile-link border border-white text-white px-10 py-4 rounded-full font-bold uppercase text-sm hover:bg-white/10 transition">Servicios</a>
-            <a href="agendar turno.html" class="mobile-link bg-cyan-500 text-black px-10 py-4 rounded-full font-bold uppercase text-sm hover:bg-cyan-400 transition">Reservar Ahora</a>
+            <a href="agendar turno.html" class="mobile-link cta-primary cta-primary--compact">Reservar turno</a>
             <a href="tienda.html" class="mobile-link border border-white text-white px-10 py-4 rounded-full font-bold uppercase text-sm hover:bg-white/10 transition">Tienda</a>
             <a href="index.html" class="text-white/50 text-xs hover:text-white transition underline underline-offset-4">ir a inicio</a>
             <a href="admin.html" class="mobile-link text-xs opacity-40 uppercase tracking-widest mt-4 italic">Acceso Personal</a>
@@ -1004,19 +1416,19 @@
 
     <!-- Hero -->
     <div id="hero-content-wrapper">
-        <div class="max-w-4xl text-center px-4">
-            <h1 id="hero-title" class="text-5xl md:text-7xl lg:text-8xl font-medium tracking-tight text-white opacity-0">
+        <div class="max-w-4xl text-center px-4 hero-panel">
+            <h1 id="hero-title" class="hero-title-scale hero-title-premium text-5xl md:text-7xl lg:text-8xl font-medium tracking-tight text-white opacity-0">
                 Tu cabello,
                 <br>
                 <span class="bg-gradient-to-r from-violet-500 to-cyan-400 bg-clip-text text-transparent">
                     tu identidad
                 </span>
             </h1>
-            <p id="hero-sub" class="text-lg text-zinc-300 mt-4 max-w-xl mx-auto opacity-0">
+            <p id="hero-sub" class="hero-sub-scale hero-sub-premium text-lg text-zinc-300 mt-4 max-w-xl mx-auto opacity-0">
                 Balayage y coloración premium para resultados naturales.
             </p>
             <div id="hero-btns" class="flex flex-col gap-4 justify-center items-center opacity-0">
-                <a href="agendar turno.html" class="mt-6 bg-gradient-to-r from-violet-500 to-cyan-400 hover:opacity-90 transition-all duration-300 shadow-xl px-10 py-4 rounded-full text-white font-bold uppercase text-[10px] tracking-widest">Agendar Turno</a>
+                <a href="agendar turno.html" class="mt-6 cta-primary">Reservar turno</a>
                 <a href="#servicios" class="text-white/60 text-xs hover:text-white transition underline underline-offset-4">ver servicios</a>
                 <a href="#servicios" class="scroll-arrow" aria-label="Ir a servicios">
                     <i class="fa-solid fa-chevron-down"></i>
@@ -1051,25 +1463,49 @@
                 <div class="rounded-2xl border border-white/10 p-6 hover:scale-[1.02] hover:border-violet-500/40 transition-all duration-300">
                     <i class="fa-solid fa-brush text-cyan-400 text-2xl mb-4"></i>
                     <h3 class="text-2xl font-bold mb-4">Balayage </h3>
-                    <p class="line-clamp-2 text-sm text-zinc-400">Técnicas de iluminación a mano libre para lograr un rubio natural, luminoso y de muy bajo mantenimiento. Cada mechón es pintado de forma única para un resultado irrepetible.</p>
+                    <div class="service-accordion">
+                        <button type="button" class="service-accordion-toggle" aria-expanded="false" aria-controls="service-desc-1">
+                            Ver descripción
+                            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                        </button>
+                        <div id="service-desc-1" class="service-accordion-content" aria-hidden="true">
+                            <p>Técnicas de iluminación a mano libre para lograr un rubio natural, luminoso y de muy bajo mantenimiento. Cada mechón es pintado de forma única para un resultado irrepetible.</p>
+                        </div>
+                    </div>
                     <p class="text-xs text-cyan-500 uppercase tracking-widest font-semibold">Alta iluminación · Degradado natural</p>
                 </div>
                 <div class="rounded-2xl border border-white/10 p-6 hover:scale-[1.02] hover:border-violet-500/40 transition-all duration-300">
                     <i class="fa-solid fa-spray-can text-cyan-400 text-2xl mb-4"></i>
                     <h3 class="text-2xl font-bold mb-4">Recuperación Capilar</h3>
-                    <p class="line-clamp-2 text-sm text-zinc-400">Tratamientos intensivos con activos de última generación para restaurar la fibra dañada, devolver elasticidad, brillo y suavidad visible desde la primera sesión.</p>
+                    <div class="service-accordion">
+                        <button type="button" class="service-accordion-toggle" aria-expanded="false" aria-controls="service-desc-2">
+                            Ver descripción
+                            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                        </button>
+                        <div id="service-desc-2" class="service-accordion-content" aria-hidden="true">
+                            <p>Tratamientos intensivos con activos de última generación para restaurar la fibra dañada, devolver elasticidad, brillo y suavidad visible desde la primera sesión.</p>
+                        </div>
+                    </div>
                     <p class="text-xs text-violet-400 uppercase tracking-widest font-semibold">Nutrición profunda · Anti-rotura</p>
                 </div>
                 <div class="rounded-2xl border border-white/10 p-6 hover:scale-[1.02] hover:border-violet-500/40 transition-all duration-300">
                     <i class="fa-solid fa-scissors text-cyan-400 text-2xl mb-4"></i>
                     <h3 class="text-2xl font-bold mb-4">Corte de Autor</h3>
-                    <p class="line-clamp-2 text-sm text-zinc-400">Diseños estructurados en base a visagismo facial, textura del cabello y estilo de vida. Cada corte potencia tus rasgos y se adapta a tu rutina real de styling.</p>
+                    <div class="service-accordion">
+                        <button type="button" class="service-accordion-toggle" aria-expanded="false" aria-controls="service-desc-3">
+                            Ver descripción
+                            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                        </button>
+                        <div id="service-desc-3" class="service-accordion-content" aria-hidden="true">
+                            <p>Diseños estructurados en base a visagismo facial, textura del cabello y estilo de vida. Cada corte potencia tus rasgos y se adapta a tu rutina real de styling.</p>
+                        </div>
+                    </div>
                     <p class="text-xs text-cyan-500 uppercase tracking-widest font-semibold">Visagismo · Corte personalizado</p>
                 </div>
             </div>
 
             <div class="text-center">
-                <button class="mt-10 bg-violet-500 hover:bg-violet-600 px-6 py-3 rounded-full transition" onclick="window.location.href='agendar turno.html'">
+                <button class="mt-10 cta-primary" onclick="window.location.href='agendar turno.html'">
                     Reservar turno
                 </button>
             </div>
@@ -1154,7 +1590,7 @@
                 </div>
 
                 <div class="text-center">
-                    <button class="mt-10 bg-violet-500 hover:bg-violet-600 px-6 py-3 rounded-full transition" onclick="window.location.href='agendar turno.html'">
+                    <button class="mt-10 cta-primary" onclick="window.location.href='agendar turno.html'">
                         Reservar turno
                     </button>
                 </div>
@@ -1360,7 +1796,7 @@
 
                 <div class="text-center mt-14">
                     <p class="text-gray-600 text-[10px] tracking-[0.3em] uppercase mb-8">Deslizá horizontalmente para comparar · Compatible con touch</p>
-                    <a href="agendar turno.html" class="inline-block ds-gradient-btn px-10 py-4">Quiero mi transformación</a>
+                    <a href="agendar turno.html" class="inline-block cta-primary">Reservar turno</a>
                 </div>
             </div>
         </section>
@@ -1424,6 +1860,11 @@
         </footer>
     </div>
 
+    <!-- Mobile quick action: fixed CTA only on small screens -->
+    <div class="mobile-fixed-reserve" aria-label="Reserva rápida en mobile">
+        <a href="agendar turno.html" class="cta-primary">Reservar turno</a>
+    </div>
+
     <script>
         if ('scrollRestoration' in history) {
             history.scrollRestoration = 'manual';
@@ -1440,6 +1881,19 @@
         window.addEventListener('load', forcePageTop);
 
         gsap.registerPlugin(ScrollTrigger, TextPlugin);
+
+        // Utility: limit high-frequency handlers to one execution per animation frame.
+        const rafThrottle = (fn) => {
+            let ticking = false;
+            return (...args) => {
+                if (ticking) return;
+                ticking = true;
+                requestAnimationFrame(() => {
+                    fn(...args);
+                    ticking = false;
+                });
+            };
+        };
 
         // Menú Hamburguesa
         const burgerBtn = document.getElementById('burger-menu');
@@ -1654,6 +2108,7 @@
         });
 
         // ── Comparadores Before / After (multi-instancia con 3 imágenes) ────
+        // Performance note: cache layout rect while interacting to avoid repeated layout reads.
         document.querySelectorAll("[data-before-after]").forEach((ba) => {
             const overlay = ba.querySelector("[data-overlay]");
             const divider = ba.querySelector("[data-divider]");
@@ -1661,6 +2116,7 @@
             const baseImg = ba.querySelector(".before-after-base img");
             const overlayImg = ba.querySelector(".before-after-overlay img");
             const navBtns = ba.querySelectorAll("[data-img-btn]");
+            let currentRect = null;
             
             const imagesData = JSON.parse(ba.getAttribute("data-images") || "[]");
             let currentImageIndex = 0;
@@ -1685,12 +2141,13 @@
                 btn.addEventListener("click", () => {
                     currentImageIndex = index;
                     loadImages(index);
-                    setPos(ba.getBoundingClientRect().left + ba.getBoundingClientRect().width / 2);
+                    currentRect = ba.getBoundingClientRect();
+                    setPos(currentRect.left + currentRect.width / 2);
                 });
             });
 
             const setPos = (clientX) => {
-                const rect = ba.getBoundingClientRect();
+                const rect = currentRect || ba.getBoundingClientRect();
                 const pct  = Math.min(Math.max((clientX - rect.left) / rect.width, 0), 1) * 100;
                 overlay.style.width = `${pct}%`;
                 divider.style.left  = `${pct}%`;
@@ -1699,15 +2156,16 @@
             };
 
             let drag = false;
-            ba.addEventListener("pointerdown",   (e) => { drag = true; ba.setPointerCapture(e.pointerId); setPos(e.clientX); });
+            ba.addEventListener("pointerdown",   (e) => { drag = true; currentRect = ba.getBoundingClientRect(); ba.setPointerCapture(e.pointerId); setPos(e.clientX); });
             ba.addEventListener("pointermove",   (e) => { if (drag) setPos(e.clientX); });
             ba.addEventListener("pointerup",     ()  => { drag = false; });
             ba.addEventListener("pointercancel", ()  => { drag = false; });
+            window.addEventListener("resize", () => { currentRect = ba.getBoundingClientRect(); }, { passive: true });
 
             // Navegación por teclado (accesibilidad)
             ba.addEventListener("keydown", (e) => {
                 const cur  = Number(ba.getAttribute("aria-valuenow") || 50);
-                const rect = ba.getBoundingClientRect();
+                const rect = currentRect || ba.getBoundingClientRect();
                 if (e.key === "ArrowLeft")  { e.preventDefault(); setPos(rect.left + ((cur - 5) / 100) * rect.width); }
                 if (e.key === "ArrowRight") { e.preventDefault(); setPos(rect.left + ((cur + 5) / 100) * rect.width); }
             });
@@ -1726,6 +2184,31 @@
                 btn.style.transform = details.classList.contains("active") ? "rotate(180deg)" : "rotate(0deg)";
             });
         });
+
+        // ── Servicios: acordeón de descripciones ────────────────────
+        (function initServiceAccordion() {
+            const buttons = document.querySelectorAll('.service-accordion-toggle');
+            if (!buttons.length) return;
+
+            buttons.forEach((button) => {
+                const contentId = button.getAttribute('aria-controls');
+                const content = contentId ? document.getElementById(contentId) : null;
+                if (!content) return;
+
+                button.addEventListener('click', () => {
+                    const isOpen = button.getAttribute('aria-expanded') === 'true';
+                    button.setAttribute('aria-expanded', String(!isOpen));
+                    content.setAttribute('aria-hidden', String(isOpen));
+                    content.classList.toggle('is-open', !isOpen);
+
+                    if (!isOpen) {
+                        content.style.maxHeight = `${content.scrollHeight}px`;
+                    } else {
+                        content.style.maxHeight = '0px';
+                    }
+                });
+            });
+        })();
 
         // ── Navegación con botones para galerías ──────────────────────
         (function initGalleryNavigation() {
@@ -1779,6 +2262,7 @@
         })();
 
         // ── Notebook section menu: sticky + scroll spy ──────────────────
+        // Performance note: scroll listener throttled via requestAnimationFrame.
         (function initNotebookSectionMenu() {
             const sectionMenu = document.querySelector('.notebook-section-menu');
             if (!sectionMenu) return;
@@ -1809,11 +2293,14 @@
             };
 
             const updateStickyState = () => {
-                sectionMenu.classList.toggle('is-scrolled', window.scrollY > 28);
+                const shouldBeScrolled = window.scrollY > 28;
+                if (sectionMenu.classList.contains('is-scrolled') !== shouldBeScrolled) {
+                    sectionMenu.classList.toggle('is-scrolled', shouldBeScrolled);
+                }
             };
 
             updateStickyState();
-            window.addEventListener('scroll', updateStickyState, { passive: true });
+            window.addEventListener('scroll', rafThrottle(updateStickyState), { passive: true });
 
             const observer = new IntersectionObserver(
                 (entries) => {
@@ -1828,7 +2315,7 @@
                 {
                     root: null,
                     rootMargin: '-32% 0px -52% 0px',
-                    threshold: [0.2, 0.35, 0.5, 0.7]
+                    threshold: [0.35, 0.6]
                 }
             );
 
